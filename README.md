@@ -1,15 +1,74 @@
-# Remix Indie Stack
+# Remix Indie Stack + SimpleLocalize (i18n) + FormatJS
 
-![The Remix Indie Stack](https://repository-images.githubusercontent.com/465928257/a241fa49-bd4d-485a-a2a5-5cb8e4ee0abf)
+![The Remix Indie Stack with i18n support](/remix-app-simplelocalize-i18n.png)
 
-Learn more about [Remix Stacks](https://remix.run/stacks).
+## Quick start
 
+Install `react-intl` using NPM:
+```bash
+npm install -S react-intl
 ```
-npx create-remix@latest --template remix-run/indie-stack
+
+Next, create `LanguageContext` and `SimpleLocalize` files. You can [copy them from here](https://github.com/simplelocalize/simplelocalize-remix-app-format-js/tree/main/app/i18n). Remember to put your Project Token in `SimpleLocalize` file.
+Then, use `SimpleLocalize` to provide intl context to your app in [`root.tsx` file](https://github.com/simplelocalize/simplelocalize-remix-app-format-js/blob/main/app/root.tsx).
+
+```tsx
+export default function App() {
+  return (
+    <SimpleLocalize>
+    <html lang="en" className="h-full">
+      <head>
+        <Meta />
+        <Links />
+      </head>
+      <body className="h-full">
+      <Outlet />
+      <ScrollRestoration />
+      <Scripts />
+      <LiveReload />
+      </body>
+    </html>
+    </SimpleLocalize>
+  );
+}
 ```
+
+Now, you can use your translations in your app. For example, in [`index.tsx` file](https://github.com/simplelocalize/simplelocalize-remix-app-format-js/blob/main/app/routes/index.tsx)
+
+```tsx
+<LanguageContext.Consumer>
+      {context => (
+        <div>
+            <p className="my-2">
+              <FormattedMessage id="USE_BUTTONS_BELOW"
+                                defaultMessage="Use buttons below"
+                                description="Here you can describe the translation key. This will be treated as 'code description'." />
+            </p>
+            <div className="flex">
+              <button
+                className="flex items-center justify-center rounded-md bg-yellow-500 px-4 py-3 font-medium text-white hover:bg-yellow-600"
+                onClick={() => context.changeLanguage("en")}>English
+              </button>
+              <button
+                className="mx-4 flex items-center justify-center rounded-md bg-yellow-500 px-4 py-3 font-medium text-white hover:bg-yellow-600"
+                onClick={() => context.changeLanguage("es")}>Spanish
+              </button>
+              <button
+                className="flex items-center justify-center rounded-md bg-yellow-500 px-4 py-3 font-medium text-white hover:bg-yellow-600"
+                onClick={() => context.changeLanguage("pl")}>Polish
+              </button>
+            </div>
+      </div>)}
+</LanguageContext.Consumer>;
+              ...
+``` 
+
+Learn more about [FormatJS integration with Remix App](https://simplelocalize.io/docs/integrations/format-js/)
+
 
 ## What's in the stack
 
+- [SimpleLocalize translation management](https://simplelocalize.io) with [FormatJS](https://formatjs.io/)
 - [Fly app deployment](https://fly.io) with [Docker](https://www.docker.com/)
 - Production-ready [SQLite Database](https://sqlite.org)
 - Healthcheck endpoint for [Fly backups region fallbacks](https://fly.io/docs/reference/configuration/#services-http_checks)
