@@ -1,6 +1,6 @@
 # Remix Indie Stack + SimpleLocalize (i18n) + FormatJS
 
-![The Remix Indie Stack with i18n support](/remix-app-simplelocalize-i18n.png)
+![The Remix Indie Stack with i18n support](/remix-app-simplelocalize-i18n.gif)
 
 ## Quick start
 
